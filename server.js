@@ -4,6 +4,11 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
+const authController = require("./controllers/auth.js");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const isSignedIn = require("./middleware/is-signed-in.js");
+const passUserToView = require("./middleware/pass-user-to-view.js")
 
 // intitialize express app
 const app = express();
@@ -22,8 +27,28 @@ mongoose.connection.on("connected", () => {
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
-// TODO : middleware for session
 
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI,
+    }),
+}));
+
+// passing user to view middleware
+app.use(passUserToView);
+
+
+// landing page 
+app.get("/", (req, res) => {
+    res.render("index.ejs");
+});
+
+// for /auth HTTP requests
+app.use("/auth", authController);
+app.use(isSignedIn);
 
 // custom error function 
 const handleServerError = (err) => {
