@@ -21,3 +21,5 @@ const userSchema = new mongoose.Schema({
         default : "member",
     },
 }, {timestamp : true});
+
+module.exports = mongoose.model("User", userSchema);
