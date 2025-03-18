@@ -4,11 +4,13 @@ const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
-const authController = require("./controllers/auth.js");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const isSignedIn = require("./middleware/is-signed-in.js");
-const passUserToView = require("./middleware/pass-user-to-view.js")
+const passUserToView = require("./middleware/pass-user-to-view.js");
+
+const authController = require("./controllers/auth.js");
+const projectsController = require("./controllers/projects.js");
 
 // intitialize express app
 const app = express();
@@ -49,6 +51,9 @@ app.get("/", (req, res) => {
 // for /auth HTTP requests
 app.use("/auth", authController);
 app.use(isSignedIn);
+
+// projects after user logs in
+app.use("/users/:userId/projects", projectsController);
 
 // custom error function 
 const handleServerError = (err) => {
