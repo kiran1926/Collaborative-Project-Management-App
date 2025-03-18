@@ -125,5 +125,80 @@ router.get("/:projectId", async(req, res) => {
     }
 })
 
+/* -----------------   Update: edit and update the selected project  ------------------------ */
+
+// get edit form
+router.get("/:projectId/edit", async(req, res) => {
+    try {
+        const users = await User.find();
+        if (!req.session.user) {
+            return res.status(401).json({ message: "Unauthorized. Please Log In!"});
+        }
+
+        const currentUser = await User.findById(req.session.user._id);
+
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const projectFound = await Project.findById(req.params.projectId).populate("owner", "name").populate("teamMembers", "name email");
+
+        if (!projectFound) {
+            return res.status(404).json({ message: "Project not found" });
+        }
+        
+        res.render("projects/edit.ejs", { project: projectFound, users });
+    } catch (error) {
+        console.log("Error getting edit page for the project: ", error);
+        res.redirect("/");
+    }
+})
+
+// updating the edits tothe project
+router.put("/:projectId", async(req, res) => {
+    try {
+        const users = await User.find();
+        if (!req.session.user) {
+            return res.status(401).json({ message: "Unauthorized. Please Log In!"});
+        }
+
+        const currentUser = await User.findById(req.session.user._id);
+
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const projectFound = await Project.findById(req.params.projectId).populate("owner", "name").populate("teamMembers", "name email");
+
+        if (!projectFound) {
+            return res.status(404).json({ message: "Project not found" });
+        }
+        // update
+        let teamMembers = req.body.teamMembers || [];
+
+        if (!Array.isArray(teamMembers)) {
+           teamMembers= [teamMembers];
+        }
+        teamMembers = teamMembers.filter( id => mongoose.Types.ObjectId.isValid(id));
+
+        console.log("Valid TeamMembers to Save:", teamMembers);
+    
+        //update properties
+        projectFound.name = req.body.name;
+        projectFound.description = req.body.description;
+        projectFound.teamMembers = teamMembers.map( id => new mongoose.Types.ObjectId(id));
+
+        console.log("Mapped Ingredients as ObjectIds:", projectFound.teamMembers);
+
+
+        await projectFound.save();
+
+        res.redirect(`/users/${req.session.user._id}/projects/${req.params.projectId}`);
+
+    } catch (error) {
+        console.log("Error updating the project: ", error);
+        res.redirect("/");
+    }
+})
 
 module.exports = router;
