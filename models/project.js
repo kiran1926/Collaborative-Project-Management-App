@@ -8,7 +8,7 @@ const projectSchema = new mongoose.Schema({
     description: {
         type: String,
     },
-    createdBy: {
+    owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
@@ -17,13 +17,7 @@ const projectSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     }],
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
-    },
-    updatedAt: { type: Date, 
-        default: Date.now
-    },
-});
+}, { timestamps: true }
+);
 
 module.exports = mongoose.model("Project", projectSchema);
