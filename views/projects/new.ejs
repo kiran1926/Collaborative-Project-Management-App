@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <%- include("../partials/_navbar.ejs") %>
     <h1>Add a new Project</h1>
     <form action="/users/<%= user._id %>/projects" method="POST">
 
