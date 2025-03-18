@@ -199,6 +199,36 @@ router.put("/:projectId", async(req, res) => {
         console.log("Error updating the project: ", error);
         res.redirect("/");
     }
-})
+});
+
+/* -----------------   Delete: the selected project  ------------------------ */ 
+router.delete("/:projectId", async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Unauthorized. Please Log In!" });
+    }
+
+    const currentUser = await User.findById(req.session.user._id);
+
+    if (!currentUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    const projectFound = await Project.findById(req.params.projectId)
+      .populate("owner")
+      .populate("teamMembers");
+
+    if (!projectFound) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    await projectFound.deleteOne();
+
+    res.redirect(`/users/${req.session.user._id}/projects`);
+  } catch (error) {
+    console.log("Error deleting the project: ", error);
+        res.redirect("/");
+  }
+});
 
 module.exports = router;
