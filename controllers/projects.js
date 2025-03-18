@@ -97,4 +97,33 @@ router.get("/", async(req, res) => {
 });
 
 
+/* -----------------   Read : read the selected project  ------------------------ */
+
+router.get("/:projectId", async(req, res) => {
+    try {
+        if (!req.session.user) {
+            return res.status(401).json({ message: "Unauthorized. Please Log In!"});
+        }
+
+        const currentUser = await User.findById(req.session.user._id);
+
+        if (!currentUser) {
+            return res.status(404).json({ message: "User not found." });
+        }
+
+        const projectFound = await Project.findById(req.params.projectId).populate("owner", "name").populate("teamMembers", "name email");
+
+        if (!projectFound) {
+            return res.status(404).json({ message: "Project not found" });
+        }
+
+        res.render("projects/show.ejs", {project: projectFound, user:currentUser});
+        
+    } catch (error) {
+        console.log("Error getting the project: ", error);
+        res.redirect("/");
+    }
+})
+
+
 module.exports = router;
