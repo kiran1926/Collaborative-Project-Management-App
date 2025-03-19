@@ -31,7 +31,19 @@
                     </li>
                     <% }) %>
             </ul>
-            <div>
+            <h3>Tasks: </h3>
+            <ul>
+                <% project.tasks.forEach(task => { %>
+                    <a href="/users/<%= user._id%>/projects/<%= project._id %>/tasks/<%= task._id %>">
+                 <li><%= task.title %> assigned to <%= task.assignedTo.name %></li>
+                </a>
+                <% }) %>
+            </ul>
+            <div class="mt-2">
+                <a href="/users/<%= user._id %>/projects/<%= project._id%>/tasks/new" class="btn btn-secondary">Add Tasks</a>
+            </div>
+
+            <div class="mt-2">
                 <a href="/users/<%= user._id %>/projects/<%=project._id%>/edit" class="btn btn-secondary">Edit
                     Project</a>
             </div>
