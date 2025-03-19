@@ -11,6 +11,7 @@ const passUserToView = require("./middleware/pass-user-to-view.js");
 
 const authController = require("./controllers/auth.js");
 const projectsController = require("./controllers/projects.js");
+const taskController = require("./controllers/tasks.js");
 
 // intitialize express app
 const app = express();
@@ -54,6 +55,7 @@ app.use(isSignedIn);
 
 // projects after user logs in
 app.use("/users/:userId/projects", projectsController);
+app.use("/users/:userId/projects", taskController);
 
 // custom error function 
 const handleServerError = (err) => {
