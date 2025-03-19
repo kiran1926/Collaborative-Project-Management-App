@@ -25,11 +25,11 @@ const taskSchema = new mongoose.Schema({
     // attachments: {
     //     type: String,  // stores file path
     // },
-    projectId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Project",
-        required: true,
-    },
+    // projectId: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Project",
+    //     required: true,
+    // },
     assignedTo: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
