@@ -21,17 +21,20 @@ const taskSchema = new mongoose.Schema(
     },
     dueDate: {
       type: Date,
+      validate: {
+        validator: function (value) {
+          return value >= new Date();
+        },
+        message: "Due date cannot be in the past",
+      },
     },
-    // attachments: {
-    //     type: String,  // stores file path
-    // },
     assignedTo: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("Task", taskSchema);
