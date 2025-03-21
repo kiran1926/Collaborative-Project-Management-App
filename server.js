@@ -8,7 +8,7 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const isSignedIn = require("./middleware/is-signed-in.js");
 const passUserToView = require("./middleware/pass-user-to-view.js");
-
+const axios = require("axios");
 const authController = require("./controllers/auth.js");
 const projectsController = require("./controllers/projects.js");
 const taskController = require("./controllers/tasks.js");
@@ -23,51 +23,61 @@ const port = process.env.PORT || "3000";
 // connection to MongoDB
 mongoose.connect(process.env.MONGODB_URI);
 mongoose.connection.on("connected", () => {
-    console.log(`Connected to MOngoDB ${mongoose.connection.name}`);
+  console.log(`Connected to MOngoDB ${mongoose.connection.name}`);
 });
 
 // Mount middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(methodOverride("_method"));
 app.use(morgan("dev"));
+app.use(express.static("public"));
 
-app.use(session({
+app.use(
+  session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true,
     store: MongoStore.create({
-        mongoUrl: process.env.MONGODB_URI,
+      mongoUrl: process.env.MONGODB_URI,
     }),
-}));
+  })
+);
 
 // passing user to view middleware
 app.use(passUserToView);
 
-
-// landing page 
+// landing page
 app.get("/", (req, res) => {
-    res.render("index.ejs");
+  res.render("index.ejs", { title: "Home Page" });
 });
 
-// for /auth HTTP requests
 app.use("/auth", authController);
 app.use(isSignedIn);
 
-// projects after user logs in
 app.use("/users/:userId/projects", projectsController);
 app.use("/users/:userId/projects", taskController);
 
-// custom error function 
+// flash messages
+app.use((req, res, next) => {
+  if (req.session.message) {
+    res.locals.message = req.session.message;
+    req.session.message = null;
+  }
+  next();
+});
+
+// custom error function
 const handleServerError = (err) => {
-    if (err.code === "EADDRINUSE") {
-        console.log(`Warning! POrt ${port} is already in taken`);
-    } else {
-        console.log("Error: ", err);
-    }
+  if (err.code === "EADDRINUSE") {
+    console.log(`Warning! POrt ${port} is already in taken`);
+  } else {
+    console.log("Error: ", err);
+  }
 };
 
 // app to listen for HTTP requests
-app.listen(port, () => {
+app
+  .listen(port, () => {
     console.log(`The exress app is ready on port ${port}!`);
-}).on("error", handleServerError);
-
+  })
+  .on("error", handleServerError);
