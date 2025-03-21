@@ -26,7 +26,7 @@ router.get("/new", async (req, res) => {
 router.post("/", async (req, res) => {
   try {
     console.log(req.body);
-    // data from new project form
+
     const { name, description, teamMembers = [] } = req.body;
 
     console.log(teamMembers);
@@ -48,7 +48,6 @@ router.post("/", async (req, res) => {
         .filter((id) => mongoose.Types.ObjectId.isValid(id));
     }
 
-    // new project
     const newProject = new Project({
       name,
       description,
@@ -58,7 +57,6 @@ router.post("/", async (req, res) => {
 
     await newProject.save();
 
-    // res.status(201).json({ message: "Project created successfully", project: newProject });
     res.redirect(`/users/${currentUser._id}/projects`);
   } catch (error) {
     console.error("Error creating project:", error);
@@ -85,11 +83,79 @@ router.get("/", async (req, res) => {
       $or: [{ owner: currentUser._id }, { teamMembers: currentUser._id }],
     })
       .populate("owner", "name")
-      .populate("teamMembers");
+      .populate("teamMembers")
+      .populate({
+        path: "tasks",
+        populate: { path: "assignedTo", select: "name email" },
+      });
 
-    res.render("projects/index.ejs", { user: currentUser, projects });
+    // track progress
+    let completedProjects = 0;
+    const projectsWithProgress = projects.map((project) => {
+      const totalTasks = project.tasks.length;
+      const completedTasks = project.tasks.filter(
+        (task) => task.completed
+      ).length;
+      const progress =
+        totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
+      if (progress === 100) {
+        completedProjects++;
+      }
+      return { ...project.toObject(), progress };
+    });
+
+    // project completed %
+    // Calculate completion percentage
+    const totalProjects = projects.length;
+    const projectCompletionPercentage =
+      totalProjects > 0
+        ? Math.round((completedProjects / totalProjects) * 100)
+        : 0;
+
+    res.render("projects/index.ejs", {
+      user: currentUser,
+      projects: projectsWithProgress,
+      projectCompletionPercentage,
+    });
   } catch (error) {
     console.log("Error fetching projects: ", error);
+    res.redirect("/");
+  }
+});
+
+//  =========================== Search Project  ====================================
+
+router.get("/search", async (req, res) => {
+  try {
+    if (!req.session.user) {
+      return res.status(401).json({ message: "Unauthorized. Please Log In!" });
+    }
+
+    const query = req.query.query || "";
+    const currentUser = await User.findById(req.session.user._id);
+
+    const projects = await Project.find({
+      $and: [
+        { $or: [{ owner: currentUser._id }, { teamMembers: currentUser._id }] },
+        {
+          $or: [
+            { name: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } },
+          ],
+        },
+      ],
+    })
+      .populate("owner", "name")
+      .populate("teamMembers")
+      .populate({
+        path: "tasks",
+        populate: { path: "assignedTo", select: "name email" },
+      });
+
+    res.render("projects/index.ejs", { user: currentUser, projects, query });
+  } catch (error) {
+    console.log("Error searching projects:", error);
     res.redirect("/");
   }
 });
@@ -101,7 +167,7 @@ router.get("/:projectId", async (req, res) => {
     if (!req.session.user) {
       return res.status(401).json({ message: "Unauthorized. Please Log In!" });
     }
-
+    const users = await User.find();
     const currentUser = await User.findById(req.session.user._id);
 
     if (!currentUser) {
@@ -120,9 +186,21 @@ router.get("/:projectId", async (req, res) => {
       return res.status(404).json({ message: "Project not found" });
     }
 
+    // Calculate project progress
+    const totalTasks = projectFound.tasks.length;
+    const completedTasks = projectFound.tasks.filter(
+      (task) => task.status === "completed"
+    ).length;
+    const progressPercentage =
+      totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
     res.render("projects/show.ejs", {
       project: projectFound,
       user: currentUser,
+      totalTasks,
+      completedTasks,
+      progressPercentage,
+      users,
     });
   } catch (error) {
     console.log("Error getting the project: ", error);
