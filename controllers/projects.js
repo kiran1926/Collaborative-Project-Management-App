@@ -7,8 +7,6 @@ const User = require("../models/user.js");
 const Project = require("../models/project.js");
 const Task = require("../models/task.js");
 
-// routes : (localhost:3000/users/:userId/projects)
-
 /* -----------------   Create : add a new project  ------------------------ */
 
 // new page view : /new
@@ -30,7 +28,7 @@ router.post("/", async (req, res) => {
     const { name, description, teamMembers = [] } = req.body;
 
     console.log(teamMembers);
-    // current user
+   
     const currentUser = await User.findById(req.session.user._id);
     if (!currentUser) {
       return res.status(404).json({ message: "User not found." });
@@ -94,7 +92,7 @@ router.get("/", async (req, res) => {
     const projectsWithProgress = projects.map((project) => {
       const totalTasks = project.tasks.length;
       const completedTasks = project.tasks.filter(
-        (task) => task.completed
+        (task) => task.status === "Completed"
       ).length;
       const progress =
         totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
@@ -189,7 +187,7 @@ router.get("/:projectId", async (req, res) => {
     // Calculate project progress
     const totalTasks = projectFound.tasks.length;
     const completedTasks = projectFound.tasks.filter(
-      (task) => task.status === "completed"
+      (task) => task.status === "Completed"
     ).length;
     const progressPercentage =
       totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
