@@ -1,0 +1,126 @@
+/* Form container with padding and margin */
+#project-form-container {
+  padding-top: 7%;
+  max-width: 800px;
+  margin: 0 auto;
+
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.box-shadow-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.box-shadow-form:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* General styles for the header */
+#project-form-title {
+  background-color: #f5b452;
+  padding: 2%;
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 10px;
+  transition: color 0.3s ease-in-out;
+}
+
+#project-form-title:hover {
+  background-color: #e9a21d;
+  color: rgb(25, 24, 24);
+}
+
+#project-name-container,
+#project-description-container,
+#project-team-container {
+  margin-bottom: 20px;
+}
+
+/* Form elements (input, textarea, select) */
+#project-name,
+#project-description,
+#project-team {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+  font-size: 1rem;
+  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#project-description {
+  height: 100%;
+}
+
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  font-size: 1rem;
+  padding: 12px;
+}
+
+#project-name:focus,
+#project-description:focus,
+#project-team:focus {
+  border-color: #df8c18;
+  box-shadow: 0 0 5px rgba(224, 140, 22, 0.5);
+}
+
+#project-name:hover,
+#project-description:hover,
+#project-team:hover {
+  border-color: #973b72;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.25);
+}
+
+/* Form labels */
+#project-name-label,
+#project-description-label,
+#project-team-label {
+  font-weight: 600;
+  color: #e17909;
+}
+
+/* submit button */
+#submit-button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px;
+  background-color: #ee9510;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#submit-button:hover {
+  background-color: #f5b452;
+  transform: scale(1.05);
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+  #project-form-container {
+    padding: 15px;
+  }
+
+  #project-form-title {
+    font-size: 1.5rem;
+  }
+
+  #submit-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
