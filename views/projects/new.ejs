@@ -4,35 +4,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- bootstrap -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <title>Add a new project</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/newProject.css">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barriecito&family=Londrina+Shadow&family=Quicksand:wght@300..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <title>Add a New Project</title>
 </head>
 
 <body>
     <%- include("../partials/_navbar.ejs") %>
-    <h1>Add a new Project</h1>
-    <form action="/users/<%= user._id %>/projects" method="POST">
 
-        <label for="name">Project Name: </label>
-        <input type="text" id="name" name="name" required>
+        <div class="container mt-5" id="project-form-container">
+            <div class="box-shadow-form p-4">
+                <h1 class="text-center mb-4" id="project-form-title">Add a New Project</h1>
 
-        <label for="description">Description: </label>
-        <textarea name="description" id="description"></textarea>
+                <form action="/users/<%= user._id %>/projects" method="POST" id="project-form" class="needs-validation"
+                    novalidate>
+                    <div class="mb-3" id="project-name-container">
+                        <label for="project-name" class="form-label" id="project-name-label">Project Name:</label>
+                        <input type="text" class="form-control" id="project-name" name="name" required>
+                        <div class="invalid-feedback" id="project-name-feedback">
+                            Please enter a project name.
+                        </div>
+                    </div>
 
-        <label for="teamMembers">Team Members</label>
-        <select name="teamMembers" id="teamMembers" multiple>
-            <% users.forEach(user=> { %>
-                <option value="<%= user._id %>">
-                    <%= user.name %>
-                </option>
-                <% }) %>
-        </select>
-        <button type="submit">Create Project</button>
-    </form>
+                    <div class="mb-3" id="project-description-container">
+                        <label for="project-description" class="form-label"
+                            id="project-description-label">Description:</label>
+                        <textarea class="form-control" id="project-description" name="description" rows="4"
+                            required></textarea>
+                        <div class="invalid-feedback" id="project-description-feedback">
+                            Please provide a project description.
+                        </div>
+                    </div>
 
-     <!-- bootstrap -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <div class="mb-3" id="project-team-container">
+                        <label for="project-team" class="form-label" id="project-team-label">Team Members:</label>
+                        <select class="form-select" name="teamMembers" id="project-team" multiple required>
+                            <% users.forEach(user=> { %>
+                                <option value="<%= user._id %>">
+                                    <%= user.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                        <div class="invalid-feedback" id="project-team-feedback">
+                            Please select at least one team member.
+                        </div>
+                    </div>
+                    <div class="action-btn-create-project">
+                        <div class="back-to-project">
+                            <a href="/users/<%= user._id %>/projects" class="btn btn-secondary"
+                                id="back-to-project-btn">
+                                <ion-icon name="arrow-back"></ion-icon> Back to Projects
+                            </a>
+                        </div>
+                        <button type="submit" class="btn btn-primary " id="submit-button">Create Project</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <%- include('../partials/_footer.ejs') %>
+        </div>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

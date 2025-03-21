@@ -4,38 +4,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- bootstrap -->
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <title>Edit <%= project.name %></title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/editProject.css">
+    <title>Edit <%= project.name %>
+    </title>
 </head>
 
 <body>
     <%- include("../partials/_navbar.ejs") %>
-    <h1>Edit <%= project.name %></h1>
-    <form action="/users/<%= user._id %>/projects/<%= project._id%>?_method=PUT" method="POST">
+        <div id="project-form-container">
+            <div class="box-shadow-form">
+                <h1 id="project-form-title">Updating : <%= project.name %>
+                </h1>
+                <form action="/users/<%= user._id %>/projects/<%= project._id%>?_method=PUT" method="POST">
 
-        <label for="name">Project Name: </label>
-        <input type="text" id="name" name="name" value="<%= project.name %>" required>
+                    <!-- Project Name -->
+                    <div id="project-name-container">
+                        <label for="name" id="project-name-label">Project Name: </label>
+                        <input type="text" id="name" name="name" value="<%= project.name %>" required>
+                    </div>
 
-        <label for="description">Description: </label>
-        <textarea name="description" id="description"><%= project.description %></textarea>
+                    <!-- Project Description -->
+                    <div id="project-description-container">
+                        <label for="description" id="project-description-label">Description: </label>
+                        <textarea name="description" id="description"><%= project.description %></textarea>
+                    </div>
 
-        <label for="teamMembers">Team Members</label>
-        <select name="teamMembers" id="teamMembers" multiple>
-            <% users.forEach( user => { %>
-                <option value="<%= user._id %>"
-                    <% if (project.teamMembers.some(member => member._id.toString() === user._id.toString())) { %>
-                        selected
-                        <% } %>>
-                    <%= user.name %>
-                </option>
-                <% }) %>
-        </select>
-        <button type="submit">Update Project</button>
-    </form>
+                    <!-- Team Members -->
+                    <div id="project-team-container">
+                        <label for="teamMembers" id="project-team-label">Team Members</label>
+                        <select name="teamMembers" id="teamMembers" multiple>
+                            <% users.forEach(user=> { %>
+                                <option value="<%= user._id %>" <% if (project.teamMembers.some(member=>
+                                    member._id.toString() === user._id.toString())) { %>
+                                    selected
+                                    <% } %>>
+                                        <%= user.name %>
+                                </option>
+                                <% }) %>
+                        </select>
+                    </div>
 
-     <!-- bootstrap -->
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+                    <!-- Submit Button -->
+                    <button type="submit" id="submit-button">Update Project</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <%- include('../partials/_footer.ejs') %>
+        </div>
+        <!-- Bootstrap -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

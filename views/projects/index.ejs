@@ -1,43 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Your Projects</title>
 </head>
 
+
 <body>
     <%- include("../partials/_navbar.ejs") %>
+        <div class="dashboard-container">
 
-    <div class="container mt-4">
-        <h2>Welcome, <%= user.name %>!</h2>
-        <h3>Your Projects</h3>
+            <!-- Main container -->
+            <div class="container mt-4">
+                <h4 id="quote">"The key is not to prioritize what's on your schedule, but to schedule your priorities."–
+                    Stephen Covey</h4>
+                <h2 id="greeting-h2">Hi, <%= user.name %>!</h2>
+                <h3 id="project-header-h3">Your Projects</h3>
 
-        <div class="row">
-            <% projects.forEach(project => { %>
-                <div class="col-md-4">
-                    <div class="card mb-3">
-                        <h4 class="card-title"><%= project.name %></h4>
-                        <p class="card-text"><%= project.description %></p>
-                        <p class="card-text">Project Head: <%= project.owner.name %></p>
-                        <ul>
-                            <% project.teamMembers.forEach (member => { %>
-                        <li class="team-members">
-                            <p> <%= member.name %> </p> 
-                           
-                        </li>
+                <div class="row-project-cards">
+                    <% projects.forEach(project=> { %>
+                        <div class="col-md-4 card-wrapper">
+                            <div class="card">
+                                <span class="card-title">
+                                    <%= project.name %>
+                                </span>
+                                <hr>
+                                <p class="card-text"><strong>About: </strong>
+                                    <%= project.description %>
+                                </p>
+                                <p class="card-text"><strong>Project-Head: </strong>
+                                    <%= project.owner.name %>
+                                </p>
+                                <!-- Dropdown for Team Members -->
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button"
+                                        id="teamMembersDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Members
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="teamMembersDropdown">
+                                        <% project.teamMembers.forEach(member=> { %>
+                                            <li><a class="dropdown-item" href="#">
+                                                    <%= member.name %>
+                                                </a></li>
+                                            <% }) %>
+                                    </ul>
+                                </div>
+                                <!-- Tasks Section -->
+                                <h5>Tasks:</h5>
+                                <ul class="list-group list-group-flush">
+                                    <% project.tasks.forEach(task=> { %>
+                                        <a href="/users/<%= user._id %>/projects/<%= project._id %>/tasks/<%= task._id %>"
+                                            class="text-decoration-none">
+                                            <li class="list-group-item">
+                                                <strong>
+                                                    <%= task.title %>
+                                                </strong> : assigned to <%= task.assignedTo.name %>
+                                            </li>
+                                        </a>
+                                        <% }) %>
+                                </ul>
+                                <a href="/users/<%= user._id %>/projects/<%= project._id %>" class="btn btn-primary"
+                                    id="viewProject">View project</a>
+
+                                <!-- Progress Bar -->
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: <%= project.progress %>%;"></div>
+                                </div>
+                                <p class="progress-text">
+                                    <%= project.progress %>% Complete
+                                </p>
+                            </div>
+                        </div>
                         <% }) %>
-                    </ul>
-                        <a href="/users/<%= user._id %>/projects/<%= project._id %>" class="btn btn-primary">View project</a>
-                    </div>
                 </div>
-            <% }) %>
-        </div>
-    </div>
+            </div>
 
-    <!-- bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Footer -->
+            <div class="footer">
+                <%- include('../partials/_footer.ejs') %>
+            </div>
+
+            <!-- Bootstrap JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
