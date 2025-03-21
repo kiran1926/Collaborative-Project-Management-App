@@ -1,0 +1,118 @@
+/* Form container with padding and margin */
+#project-form-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.box-shadow-form {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  margin-bottom: 40px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.box-shadow-form:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+#project-form-title {
+  font-size: 2rem;
+  color: #ffffff;
+  background-color: #ee9510;
+  border-radius: 10px;
+  padding: 3%;
+  font-weight: bold;
+  text-align: center;
+  transition: color 0.3s ease-in-out;
+}
+
+#project-form-title:hover {
+  background-color: #f5b452;
+}
+
+/* Styling for each form element */
+#project-name-container,
+#project-description-container,
+#project-team-container {
+  margin-bottom: 20px;
+}
+
+#project-name,
+#project-description,
+#project-team {
+  border-radius: 8px;
+  border: 1px solid #ced4da;
+  transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+#project-name:focus,
+#project-description:focus,
+#project-team:focus {
+  border-color: #6c757d;
+  box-shadow: 0 0 5px #ee9510;
+}
+
+#project-name-label,
+#project-description-label,
+#project-team-label {
+  font-weight: 600;
+  color: #333;
+}
+
+#project-name-feedback,
+#project-description-feedback,
+#project-team-feedback {
+  font-size: 0.9rem;
+  color: #dc3545;
+}
+
+#submit-button {
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 12px;
+  background-color: #ee9510;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+#back-to-project-btn {
+  font-size: 1 rem;
+  padding: 12px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+#back-to-project-btn:hover {
+  background-color: #ee9510;
+  transform: scale(1.05);
+  border-color: #ee9510;
+}
+
+#submit-button:hover {
+  background-color: #ee9510;
+  transform: scale(1.05);
+}
+
+.action-btn-create-project {
+  display: flex;
+  justify-content: space-between;
+  gap: 20%;
+}
+
+@media (max-width: 768px) {
+  #project-form-container {
+    padding: 15px;
+  }
+
+  #project-form-title {
+    font-size: 1.5rem;
+  }
+
+  #submit-button {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+}
