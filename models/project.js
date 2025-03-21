@@ -26,6 +26,12 @@ const projectSchema = new mongoose.Schema(
         ref: "Task",
       },
     ],
+    progress: {
+      type: Number,
+      default: 0,
+      min: 0,
+      max: 100,
+    },
   },
   { timestamps: true }
 );
