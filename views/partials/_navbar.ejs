@@ -1,68 +1,136 @@
-  <!-- Include Ionicons -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
-
+<!-- Include Ionicons -->
+<script
+  type="module"
+  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"
+></script>
 
 <nav class="navbar navbar-expand-lg">
-    <div class="container" id="nav-container">
-        <a class="navbar-brand" href="/">
-            <svg width="150" height="40" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="5" width="40" height="40" rx="8" fill="#000000"/>
-                <polyline points="12,25 20,35 35,15" stroke="white" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
-                <text x="55" y="35" font-family="Arial, sans-serif" font-size="30" font-weight="bolder" fill="#2c3e50">
-                    Task
-                    <tspan fill="#ffffff">Sync</tspan>
-                </text>
-            </svg>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <!-- user not logged in -->
-                <% if (!user) { %>
-                    <li class="nav-item">
-                        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#signInModal" id="sign-in-btn">Sign In</button>
-                          <!-- Include sign-in Modal -->
-      <%- include("../auth/sign-in.ejs") %>
-                    </li>
-                    <li class="nav-item">
-                        <!-- Trigger button for the modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#signupModal" id="sign-up-btn">
-        Sign Up
+  <div class="container" id="nav-container">
+    <a class="navbar-brand" href="/">
+      <svg
+        width="150"
+        height="40"
+        viewBox="0 0 200 50"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect x="5" y="5" width="40" height="40" rx="8" fill="#000000" />
+        <polyline
+          points="12,25 20,35 35,15"
+          stroke="white"
+          stroke-width="4"
+          fill="none"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        />
+        <text
+          x="55"
+          y="35"
+          font-family="Arial, sans-serif"
+          font-size="30"
+          font-weight="bolder"
+          fill="#2c3e50"
+        >
+          Task
+          <tspan fill="#ffffff">Sync</tspan>
+        </text>
+      </svg>
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav"
+    >
+      <span class="navbar-toggler-icon"></span>
     </button>
-      <!-- Include sign-up Modal -->
-      <%- include("../auth/sign-up.ejs") %>
-                    </li>
-                    <!-- logged in User  -->
-                <% } else { %>
-                    <form class="form-inline my-2 my-lg-0" action="/users/<%= user._id %>/projects/search" method="GET">
-                        <div class="input-group" style="width: 100%; padding-right: 30px;">
-                            <input class="form-control" type="search" id="name" name="query" value="<%= typeof query !== 'undefined' ? query : '' %>"
-                                   placeholder="Search Projects" aria-label="Search" style="font-size: larger;">
-                            <button class="btn btn-outline" style="background-color: #d5f9f4; width: 40px;"
-                                    type="submit">
-                                <ion-icon name="search-outline"
-                                          style="color: #190d14; font-size: larger;" id="search-icon"></ion-icon>
-                            </button>
-                        </div>
-                      </form>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/<%= user._id %>/projects">Dashboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/<%= user._id %>/projects/new"> + Add Project</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/users/<%= user._id %>/projects">Projects</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/auth/sign-out">Log Out</a>
-                    </li>
-               <% } %>
-            </ul>
-        </div>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- user not logged in -->
+        <% if (!user) { %>
+        <li class="nav-item">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-toggle="modal"
+            data-bs-target="#signInModal"
+            id="sign-in-btn"
+          >
+            Sign In
+          </button>
+          <!-- Include sign-in Modal -->
+          <%- include("../auth/sign-in.ejs") %>
+        </li>
+        <li class="nav-item">
+          <!-- Trigger button for the modal -->
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#signupModal"
+            id="sign-up-btn"
+          >
+            Sign Up
+          </button>
+          <!-- Include sign-up Modal -->
+          <%- include("../auth/sign-up.ejs") %>
+        </li>
+        <!-- logged in User  -->
+        <% } else { %>
+        <form
+          class="form-inline my-2 my-lg-0"
+          action="/users/<%= user._id %>/projects/search"
+          method="GET"
+        >
+          <div class="input-group" style="width: 100%; padding-right: 30px">
+            <input
+              class="form-control"
+              type="search"
+              id="name"
+              name="query"
+              value="<%= typeof query !== 'undefined' ? query : '' %>"
+              placeholder="Search Projects"
+              aria-label="Search"
+              style="font-size: larger"
+            />
+            <button
+              class="btn btn-outline"
+              style="background-color: #d5f9f4; width: 40px"
+              type="submit"
+            >
+              <ion-icon
+                name="search-outline"
+                style="color: #190d14; font-size: larger"
+                id="search-icon"
+              ></ion-icon>
+            </button>
+          </div>
+        </form>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/<%= user._id %>/projects"
+            >Dashboard</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/<%= user._id %>/projects/new">
+            + Add Project</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/<%= user._id %>/projects"
+            >Projects</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/auth/sign-out">Log Out</a>
+        </li>
+        <% } %>
+      </ul>
     </div>
+  </div>
 </nav>
