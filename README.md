@@ -76,7 +76,6 @@ Designed to streamline **teamwork, productivity, and project organization**, thi
 ### Libraries Used:
 
 - Bootstrap 5 for the UI components.
-- Socket.io for real-time messaging and communication.
 - MongoDB for database management.
 
 ### Assets:
