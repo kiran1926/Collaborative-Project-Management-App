@@ -1,25 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <!-- Bootstrap CSS -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Sign In</title>
-</head>
-<body>
-  <%- include("../partials/_navbar.ejs") %>
-  <h1>Sign in</h1>
-  <form action="/auth/sign-in" method="POST">
-    <!-- TODO : Remove test creds -->
-    <label for="email">Email:</label>
-    <input type="text" name="email" id="email" required />
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required />
-    <button type="submit">Sign in</button>
-  </form>
+<!-- Sign In Modal -->
+<div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signInModalLabel">Log In to TaskSync</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/auth/sign-in" method="POST">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" class="form-control" required />
 
-   <!-- Bootstrap JS -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" class="form-control" required />
+
+                    <button type="submit" class="btn btn-warning w-100 mt-3">Log In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
