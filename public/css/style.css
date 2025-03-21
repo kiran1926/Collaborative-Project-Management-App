@@ -1,0 +1,378 @@
+/* Global styles */
+body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+}
+
+.content-wrapper {
+  flex: 1; /* Pushes footer to the bottom */
+}
+
+.navbar-brand {
+  .londrina-shadow-regular {
+    font-family: "Londrina Shadow", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+#quote {
+  font-style: italic;
+  color: #1886a1;
+  text-align: center;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #1886a1, #7bcee6);
+  color: white;
+  padding: 60px 20px;
+  border-radius: 10px;
+  margin: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.hero-description {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 10px;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  font-weight: 300;
+  color: #f8f9fa;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hero-description p {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.hero-description ion-icon {
+  font-size: 1.5rem;
+  color: #ffd700;
+}
+
+.hero-section p {
+  font-size: 1.2rem;
+  margin-bottom: 40px;
+}
+
+/* GetStarted Button */
+.get-started .btn {
+  background-color: #ffd700;
+  color: #333;
+  font-size: 1.4rem;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+.get-started .btn:hover {
+  background-color: #ffcc00;
+  transform: scale(1.05);
+}
+#my-project-btn {
+  background-color: #e08c0e;
+  border-color: #e08c0e;
+  font-size: x-large;
+}
+
+#my-project-btn:hover {
+  background-color: #e98c1b;
+  transform: scale(1.05);
+}
+
+/* Welcome Message */
+.container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Dashboard Screenshot */
+.dashboard-img {
+  max-width: 90%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.screenshot-container img {
+  width: 80%;
+  max-width: 800px;
+  border-radius: 10px;
+}
+
+/* Footer */
+.bg-custom {
+  background-color: #f5b452 !important;
+  margin-top: 50px;
+}
+/* Navbar styling */
+nav,
+#nav-container {
+  background-color: #f5b452;
+  padding: 0.9%;
+  font-size: 1.2rem;
+}
+
+.navbar-brand {
+  color: rgb(24, 19, 19);
+}
+
+nav .navbar-nav .nav-link {
+  color: rgb(19, 17, 17);
+}
+
+nav .navbar-nav .nav-link:hover {
+  color: #ffffff;
+  background-color: #d96a0e;
+  border-radius: 10px;
+}
+
+nav #sign-up-btn,
+#sign-in-btn {
+  background-color: transparent;
+  border-color: #e08c0e;
+  color: #0a0b0c;
+  margin-left: 5px;
+}
+
+/* sign up modal */
+#sign-up-modal-header {
+  background-color: #f4ab3e;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  padding: 3%;
+}
+#sign-up-form-btn {
+  background-color: #e08c0e;
+  border-color: #e08c0e;
+}
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* New styles for the "Your Projects" page */
+
+/* Project Page */
+#greeting-h2 {
+  color: #2c3e50;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+#project-header-h3 {
+  font-size: 1.8rem;
+  color: #34495e;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card {
+  border-radius: 10px;
+  border: none;
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Title Styling */
+.card-title {
+  font-size: 1.4rem;
+  color: #ffffff;
+  background: #f5b452;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* Description Text */
+.card-text {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 10px 20px;
+  text-align: right;
+}
+
+.card-footer .btn {
+  font-size: 0.9rem;
+  padding: 8px 16px;
+  border-radius: 25px;
+  background-color: #f5b452 !important;
+  color: white;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+#viewProject {
+  background-color: #e08c0e;
+  border-color: #f5b452;
+}
+#viewProject:hover {
+  background-color: #f39e37;
+}
+
+/* Team Members Dropdown */
+.team-members {
+  margin-bottom: 20px;
+}
+
+.dropdown-toggle {
+  background-color: #33d2ca;
+  color: white;
+  border-radius: 5px;
+  padding: 8px 16px;
+  text-align: left;
+  font-size: 1rem;
+  border: none;
+  width: 40%;
+  margin-bottom: 10px;
+}
+
+.dropdown-toggle:hover {
+  background-color: #22d6dc;
+}
+
+.dropdown-menu {
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 5px;
+}
+
+/* Task List */
+ul.list-group {
+  padding-left: 20px;
+  list-style-type: none;
+  margin-bottom: 20px;
+}
+
+ul.list-group .list-group-item {
+  border: none;
+  background-color: #f8f9fa;
+  padding: 12px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+ul.list-group .list-group-item:hover {
+  background-color: #f5b452;
+  color: white;
+}
+
+/* Link Styling */
+.text-decoration-none {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Footer Styling */
+.card-footer {
+  background-color: #f8f9fa;
+  padding: 12px 20px;
+  text-align: right;
+  border-top: 1px solid #f1f1f1;
+}
+
+.card-footer .btn {
+  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 25px;
+  color: white;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease;
+}
+
+.card-wrapper {
+  margin-bottom: 30px;
+}
+
+/*  progress bar */
+.progress-container {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  overflow: hidden;
+  height: 12px;
+  margin-top: 15px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #2ecc71;
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-text {
+  font-size: 14px;
+  margin-top: 5px;
+  text-align: right;
+  color: #333;
+}
+
+.row-project-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Ensure each card takes full width on smaller screens and adjusts on larger screens */
+.card-wrapper {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+/* On medium screens, show two columns */
+@media (min-width: 576px) {
+  .card-wrapper {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* On large screens (desktops), show three columns */
+@media (min-width: 992px) {
+  .card-wrapper {
+    flex: 1 1 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+  }
+}
