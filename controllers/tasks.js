@@ -52,7 +52,35 @@ router.post("/:projectId/tasks", async (req, res) => {
   }
 });
 
-// ============================  Read Task  ==============================================
+// ================================  Read All Tasks of a project  ==============================================
+
+router.get("/tasks", async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const users = await User.find();
+
+    const allTasks = await Project.aggregate([
+      { $match: { user: mongoose.Types.ObjectId(userId) } },
+      {
+        $lookup: {
+          from: "tasks",
+          localField: "tasks",
+          foreignField: "_id",
+          as: "tasks",
+        },
+      },
+      { $unwind: "$tasks" },
+      { $replaceRoot: { newRoot: "$tasks" } },
+    ]);
+
+    res.render("tasks/index.ejs", { tasks: allTasks, users });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error fetching tasks");
+  }
+});
+
+// ===================================  Read Task  =========================================================
 
 router.get("/:projectId/tasks/:taskId", async (req, res) => {
   try {
@@ -76,7 +104,7 @@ router.get("/:projectId/tasks/:taskId", async (req, res) => {
   }
 });
 
-// ============================  Edit Task  ================================================
+// ==================================  Edit Task  ================================================================
 
 // get edit page
 router.get("/:projectId/tasks/:taskId/edit", async (req, res) => {
@@ -121,14 +149,14 @@ router.put("/:projectId/tasks/:taskId", async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
     res.redirect(
-      `/users/${req.session.user._id}/projects/${req.params.projectId}/tasks/${taskId}`
+      `/users/${req.session.user._id}/projects/${req.params.projectId}`
     );
   } catch (error) {
     console.log("Error updating task: ", error);
   }
 });
 
-// =============================  Delete Task  =======================================
+// ====================================  Delete Task  ========================================================
 
 router.delete("/:projectId/tasks/:taskId", async (req, res) => {
   try {
@@ -150,6 +178,56 @@ router.delete("/:projectId/tasks/:taskId", async (req, res) => {
     );
   } catch (error) {
     console.log("Error updating task: ", error);
+  }
+});
+
+// ================================  Search Task  ==========================================================
+router.get("/:projectId/tasks/search", async (req, res) => {
+  try {
+    const query = req.query;
+    const project = await Project.findById(req.params.projectId);
+
+    if (!project) {
+      return res.status(404).json({ message: "Project not found" });
+    }
+
+    const tasks = await Task.find({
+      $and: [
+        { _id: { $in: project.tasks } },
+        {
+          $or: [
+            { title: { $regex: query, $options: "i" } },
+            { description: { $regex: query, $options: "i" } },
+          ],
+        },
+      ],
+    }).populate("assignedTo", "name email");
+
+    res.render("tasks/index.ejs", { project, tasks });
+  } catch (error) {
+    console.log("Error searching tasks:", error);
+    res.redirect("/");
+  }
+});
+
+//  ================================ Marking task as complete  ========================================
+
+router.put("/:projectId/tasks/:taskId/complete", async (req, res) => {
+  try {
+    const task = await Task.findById(req.params.taskId);
+    if (!task) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    task.status = "Completed";
+    await task.save();
+
+    res.redirect(
+      `/users/${req.session.user._id}/projects/${req.params.projectId}`
+    );
+  } catch (error) {
+    console.log("Error completing task: ", error);
+    res.redirect("/");
   }
 });
 
